@@ -16,24 +16,21 @@ import {
 
 const form = document.querySelector('.form');
 const gallery = document.querySelector('.gallery');
+const loadMoreBtn = document.querySelector('.load-more');
+
+const PER_PAGE = 15;
 
 let searchQuery = '';
 let page = 1;
 let totalHits = 0;
 
-const PER_PAGE = 15;
-
 form.addEventListener('submit', handleSearch);
-
-const loadMoreBtn = document.querySelector('.load-more');
-
 loadMoreBtn.addEventListener('click', handleLoadMore);
 
 async function handleSearch(event) {
   event.preventDefault();
 
-  const input = event.currentTarget.elements['search-text'];
-  const query = input.value.trim();
+  const query = event.currentTarget.elements['search-text'].value.trim();
 
   if (query === '') {
     iziToast.error({
@@ -69,9 +66,7 @@ async function handleSearch(event) {
 
     createGallery(data.hits);
 
-    const loadedImages = data.hits.length;
-
-    if (loadedImages >= totalHits) {
+    if (data.hits.length < PER_PAGE || data.hits.length >= totalHits) {
       hideLoadMoreButton();
       showEndMessage();
     } else {
@@ -102,9 +97,9 @@ async function handleLoadMore() {
     const loadedImages = gallery.querySelectorAll('.gallery-item').length;
 
     if (
-      data.hits.length === 0 ||
+      data.hits.length < PER_PAGE ||
       loadedImages >= totalHits ||
-      data.hits.length < PER_PAGE
+      data.hits.length === 0
     ) {
       hideLoadMoreButton();
       showEndMessage();
