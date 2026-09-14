@@ -99,6 +99,29 @@ body {
   display: block;
 }
 
+.is-hidden {
+  display: none;
+}
+
+.load-more {
+  display: block;
+  margin: 20px auto;
+}
+
+.end-message {
+  text-align: center;
+  margin: 20px auto;
+}
+
+.loader {
+  display: none;
+  margin: 20px auto;
+}
+
+.loader.is-visible {
+  display: block;
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
@@ -116,3 +139,4 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
